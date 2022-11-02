@@ -447,8 +447,6 @@ void essential(int minterms[], int size)
                         chk[val5] ? tempCircled += 0 : tempCircled += 1;
                         chk[val6] ? tempCircled += 0 : tempCircled += 1;
                         chk[val7] ? tempCircled += 0 : tempCircled += 1;
-
-                        cout << minterms[b] << ":" << val1 << ":" << val2 << ":" << val3 << ":" << val4 << ":" << val5 << ":" << val6 << ":" << val7 << endl;
                         
                         // Store in Buffer
                         if (tempCircled > unCircled)

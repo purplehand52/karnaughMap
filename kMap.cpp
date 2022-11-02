@@ -574,8 +574,8 @@ void essential(int minterms[], int size)
 
 int main()
 {
-    int sample[] = {0, 1, 2, 4, 5, 6, 8, 9, 12, 13, 14};
-    essential(sample, 11);
+    int sample[] = {0, 1, 3, 5, 7, 9, 13, 15};
+    essential(sample, 8);
 
     return(0);
 }

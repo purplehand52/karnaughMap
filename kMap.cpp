@@ -679,8 +679,13 @@ void essential(int minterms[], int size, int lit)
 
 int main()
 {
-    int order,n; cin>>order>>n;
+    int order,n; 
+    cout << "Enter number of literals involved in K-Map: ";
+    cin>>order;
+    cout << "Enter number of minterms: ";
+    cin>>n;
     int sample[n];
+    cout << "Enter minterms: ";
     for(int i=0; i<n; i++){cin>>sample[i];}	
     essential(sample, n, order); int flag = 0;
     if(order == 4){

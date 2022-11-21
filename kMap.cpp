@@ -456,10 +456,10 @@ void essential(int minterms[], int size, int lit)
     }
     }
 
-    for(int a = 0; a < 16; a++)
+    /*for(int a = 0; a < 16; a++)
     {
         cout << a << ":" << chk[a] << endl;
-    }
+    }*/
     // Modify chk
     // for(int w = 0; w < 16; w++)
     // {
@@ -476,7 +476,7 @@ void essential(int minterms[], int size, int lit)
     //     if(!chk[minterms[q]]) cout << minterms[q] << endl;
     // }
     // cout << endl;
-    cout << "-----------------------------------------------------------------------------"<< endl;
+    // cout << "-----------------------------------------------------------------------------"<< endl;
 
     // Control Variables
     int b; 
@@ -669,10 +669,10 @@ void essential(int minterms[], int size, int lit)
     }
     }
 
-    for(int a = 0; a < 16; a++)
+    /*for(int a = 0; a < 16; a++)
     {
         cout << a << ":" << chk[a] << endl;
-    }
+    }*/
 
     return;
 }
@@ -683,6 +683,7 @@ int main()
     int sample[n];
     for(int i=0; i<n; i++){cin>>sample[i];}	
     essential(sample, n, order); int flag = 0;
+    if(order == 4){
     for(int i=0; i<v.size(); i++){
     	if(v[i].size() == 1){
     	if(flag){cout<<"+";}
@@ -745,7 +746,85 @@ int main()
     	}
     	if(v[i].size() == 16){cout<<"1"<<endl;}
 }
-	cout<<endl;
-    
+	cout<<endl;}
+	else if(order == 3){
+    	for(int i=0; i<v.size(); i++){
+    	if(v[i].size() == 1){
+    	if(flag){cout<<"+";}
+    	bitset<3> b(v[i][0]);
+    	//cout<<b<<endl;
+    	char c = 'A';
+    	for(int i=2; i>=0; i--){
+    	if(b[i] == 1){cout<<c; c++;} else {cout<<c<<"'"; c++;}
+    	}
+    	flag = 1;
+    	}
+    	if(v[i].size() == 2){
+    	if(flag){cout<<"+";}
+    	bitset<3> b1(v[i][0]); bitset<3> b2(v[i][1]);
+    	//cout<<v[i][0]<<" "<<v[i][1]<<endl;
+    	bitset<3> b = b1^b2;
+
+    	char c = 'A';
+    	//cout<<b1<<endl<<b2<<endl<<b<<endl;
+    	for(int i=2; i>=0; i--){
+    		if(b[i] == 0){
+    			if(b1[i] == 0 && b2[i] == 0){cout<<c<<"'";}
+    			else if(b1[i] == 1 && b2[i] == 1){cout<<c;}
+    		}
+    	c++;
+    	}
+    	flag = 1;
+    	}
+    	if(v[i].size() == 4){
+    	if(flag){cout<<"+";}
+    	bitset<3> b1((v[i][0])); bitset<3> b2((v[i][1])); bitset<3> b3((v[i][2])); bitset<3> b4((v[i][3])); bitset<3> b = b1^b2^b3^b4;
+    	//cout<<b<<endl;
+    	char c = 'A';
+    	//cout<<b1<<endl<<b2<<endl<<b<<endl;
+    	for(int i=2; i>=0; i--){
+    		if(b[i] == 0){
+    			if(b1[i] == 0 && b2[i] == 0 && b3[i] == 0 && b4[i] == 0){cout<<c<<"'";}
+    			else if(b1[i] == 1 && b2[i] == 1 && b3[i] == 1 && b4[i] == 1){cout<<c;}
+    		}
+    	c++;
+    	}
+    	flag = 1;
+    	}
+    	if(v[i].size() == 8){cout<<"1"<<endl;}
+}
+	cout<<endl;}
+	else if(order == 2){
+    	for(int i=0; i<v.size(); i++){
+    	if(v[i].size() == 1){
+    	if(flag){cout<<"+";}
+    	bitset<2> b(v[i][0]);
+    	//cout<<b<<endl;
+    	char c = 'A';
+    	for(int i=1; i>=0; i--){
+    	if(b[i] == 1){cout<<c; c++;} else {cout<<c<<"'"; c++;}
+    	}
+    	flag = 1;
+    	}
+    	if(v[i].size() == 2){
+    	if(flag){cout<<"+";}
+    	bitset<2> b1(v[i][0]); bitset<2> b2(v[i][1]);
+    	//cout<<v[i][0]<<" "<<v[i][1]<<endl;
+    	bitset<2> b = b1^b2;
+
+    	char c = 'A';
+    	//cout<<b1<<endl<<b2<<endl<<b<<endl;
+    	for(int i=1; i>=0; i--){
+    		if(b[i] == 0){
+    			if(b1[i] == 0 && b2[i] == 0){cout<<c<<"'";}
+    			else if(b1[i] == 1 && b2[i] == 1){cout<<c;}
+    		}
+    	c++;
+    	}
+    	flag = 1;
+    	}
+    	if(v[i].size() == 4){cout<<"1"<<endl;}
+}
+	cout<<endl;}
     return(0);
 }

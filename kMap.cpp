@@ -682,13 +682,70 @@ int main()
     int order,n; cin>>order>>n;
     int sample[n];
     for(int i=0; i<n; i++){cin>>sample[i];}	
-    essential(sample, n, order);
-    cout<<endl;
+    essential(sample, n, order); int flag = 0;
     for(int i=0; i<v.size(); i++){
-    	for(int j=0; j<v[i].size(); j++){
-    		cout<<v[i][j]<<" ";
-    	}cout<<endl;
-    }
+    	if(v[i].size() == 1){
+    	if(flag){cout<<"+";}
+    	bitset<4> b(v[i][0]);
+    	//cout<<b<<endl;
+    	char c = 'A';
+    	for(int i=3; i>=0; i--){
+    	if(b[i] == 1){cout<<c; c++;} else {cout<<c<<"'"; c++;}
+    	}
+    	flag = 1;
+    	}
+    	if(v[i].size() == 2){
+    	if(flag){cout<<"+";}
+    	bitset<4> b1(v[i][0]); bitset<4> b2(v[i][1]);
+    	//cout<<v[i][0]<<" "<<v[i][1]<<endl;
+    	bitset<4> b = b1^b2;
+
+    	char c = 'A';
+    	//cout<<b1<<endl<<b2<<endl<<b<<endl;
+    	for(int i=3; i>=0; i--){
+    		if(b[i] == 0){
+    			if(b1[i] == 0 && b2[i] == 0){cout<<c<<"'";}
+    			else if(b1[i] == 1 && b2[i] == 1){cout<<c;}
+    		}
+    	c++;
+    	}
+    	flag = 1;
+    	}
+    	if(v[i].size() == 4){
+    	if(flag){cout<<"+";}
+    	bitset<4> b1((v[i][0])); bitset<4> b2((v[i][1])); bitset<4> b3((v[i][2])); bitset<4> b4((v[i]			[3]));
+    	bitset<4> b = b1^b2^b3^b4;
+    	//cout<<b<<endl;
+    	char c = 'A';
+    	//cout<<b1<<endl<<b2<<endl<<b<<endl;
+    	for(int i=3; i>=0; i--){
+    		if(b[i] == 0){
+    			if(b1[i] == 0 && b2[i] == 0 && b3[i] == 0 && b4[i] == 0){cout<<c<<"'";}
+    			else if(b1[i] == 1 && b2[i] == 1 && b3[i] == 1 && b4[i] == 1){cout<<c;}
+    		}
+    	c++;
+    	}
+    	flag = 1;
+    	}
+    	if(v[i].size() == 8){
+    	if(flag){cout<<"+";}
+    	bitset<4> b1((v[i][0])); bitset<4> b2((v[i][1])); bitset<4> b3((v[i][2])); bitset<4> b4((v[i]			[3])); bitset<4> b5((v[i][4])); bitset<4> b6((v[i][5])); bitset<4> b7((v[i][6])); bitset<4> b8((v[i][7]));
+    	bitset<4> b = b1^b2^b3^b4^b5^b6^b7^b8;
+    	//cout<<b<<endl;
+    	char c = 'A';
+    	//cout<<b1<<endl<<b2<<endl<<b<<endl;
+    	for(int i=3; i>=0; i--){
+    		if(b[i] == 0){
+    			if(b1[i] == 0 && b2[i] == 0 && b3[i] == 0 && b4[i] == 0 && b5[i] == 0 && b6[i] == 0 && b7[i] == 0 && b8[i] == 0){cout<<c<<"'";}
+    			else if(b1[i] == 1 && b2[i] == 1 && b3[i] == 1 && b4[i] == 1 && b5[i] == 1 && b6[i] == 1 && b7[i] == 1 && b8[i] == 1){cout<<c;}
+    		}
+    	c++;
+    	}
+    	flag = 1;
+    	}
+    	if(v[i].size() == 16){cout<<"1"<<endl;}
+}
+	cout<<endl;
     
     return(0);
 }

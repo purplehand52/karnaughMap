@@ -164,9 +164,19 @@ void printK2(bool map[4])
 void essential(int minterms[], int size, int lit)
 {
     // Special Case
-    if(size == 16)
+    if((size == 16) && (lit == 4))
     {
         cout << "-----1-----" << endl;
+        return;
+    }
+    else if((size == 8) && (lit == 3))
+    {
+        cout << "-----1-----" << endl;
+        return;
+    }
+    else if((size == 4) && (lit == 2))
+    {
+        cout << "-----1------" << endl;
         return;
     }
     // _________________________________________________________________________________________________
@@ -446,6 +456,10 @@ void essential(int minterms[], int size, int lit)
     }
     }
 
+    for(int a = 0; a < 16; a++)
+    {
+        cout << a << ":" << chk[a] << endl;
+    }
     // Modify chk
     // for(int w = 0; w < 16; w++)
     // {
@@ -462,7 +476,7 @@ void essential(int minterms[], int size, int lit)
     //     if(!chk[minterms[q]]) cout << minterms[q] << endl;
     // }
     // cout << endl;
-    //cout << "-----------------------------------------------------------------------------"<< endl;
+    cout << "-----------------------------------------------------------------------------"<< endl;
 
     // Control Variables
     int b; 
@@ -522,7 +536,7 @@ void essential(int minterms[], int size, int lit)
                             chk[val7] = true;
 
                             // Update uncircled
-                            unCircled = tempCircled;
+                            // unCircled = tempCircled;
                         }
                         
                         // Reset
@@ -588,7 +602,7 @@ void essential(int minterms[], int size, int lit)
                         chk[val3] = true;
 
                         // Update uncircled
-                        unCircled = tempCircled;
+                        // unCircled = tempCircled;
                     }
                     
                     // Reset
@@ -622,7 +636,7 @@ void essential(int minterms[], int size, int lit)
         int *tempList = nearestNeigh(minterms[b], 4);
         for(x = 0; x < 4; x++)
         {
-            val = tempList[x];
+            val = *(tempList+x);
             if(map[val])
             {
                 // Find #uncircled variables
@@ -636,7 +650,7 @@ void essential(int minterms[], int size, int lit)
                     chk[val] = true;
 
                     // Update uncircled
-                    unCircled = tempCircled;
+                    // unCircled = tempCircled;
                 }
             }
         }
@@ -654,6 +668,12 @@ void essential(int minterms[], int size, int lit)
         buffer2[0] = -1;
     }
     }
+
+    for(int a = 0; a < 16; a++)
+    {
+        cout << a << ":" << chk[a] << endl;
+    }
+
     return;
 }
 

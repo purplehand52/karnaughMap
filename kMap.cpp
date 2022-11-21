@@ -1,6 +1,8 @@
-#include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
+
+vector<vector<int>> v;
 
 // The following function returns the nearest neighbours of an element x in a Karnaugh Map of n variables
 int* nearestNeigh(int x, int n)
@@ -61,7 +63,8 @@ void gen2(int x, int n)
     int i;
     for(i = 0; i < n; i++)
     {
-        cout << "[" << x << ":" << list[i] << "]" << endl;
+    	//v.push_back({x,list[i]});
+        //cout << "[" << x << ":" << list[i] << "]" << endl;
     }
 
     // Free memory + return
@@ -83,7 +86,8 @@ void gen4(int x, int n)
         for(j = 0; j < i; j++)
         {
             temp = x ^ list[i] ^ list[j];
-            cout << "[" << x << ":" << list[i] << ":" << temp << ":" << list[j] << "]" << endl;
+            //v.push_back({x,list[i],temp,list[j]});
+            //cout << "[" << x << ":" << list[i] << ":" << temp << ":" << list[j] << "]" << endl;
         }
     }
 
@@ -111,7 +115,8 @@ void gen8(int x, int n)
                 temp2 = x ^ list[j] ^ list[k];
                 temp3 = x ^ list[k] ^ list[i];
                 temp4 = list[i] ^ list[j] ^ list[k];
-                cout << "[" << x << ":" << list[i] << ":" << temp1 << ":" << list[j] << ":" << temp2 << ":" << list[k] << ":" << temp3 << ":" << temp4 << "]" << endl;
+                //v.push_back({x,list[i],temp1,list[j],temp2,list[k],temp3,temp4});
+                //cout << "[" << x << ":" << list[i] << ":" << temp1 << ":" << list[j] << ":" << temp2 << ":" << list[k] << ":" << temp3 << ":" << temp4 << "]" << endl;
             }
         }
     }
@@ -211,7 +216,8 @@ void essential(int minterms[], int size, int lit)
         {
             //
             //
-            cout << minterms[a] << endl;
+            v.push_back({minterms[a]});
+            //cout << minterms[a] << endl;
             //
             //
             chk[minterms[a]] = true;
@@ -255,7 +261,8 @@ void essential(int minterms[], int size, int lit)
         {
             //
             //
-            cout << minterms[a] << ":" << val << endl;
+            v.push_back({minterms[a],val});
+            //cout << minterms[a] << ":" << val << endl;
             //
             //
             chk[minterms[a]] = true;
@@ -333,7 +340,8 @@ void essential(int minterms[], int size, int lit)
         {
             //
             //
-            cout << minterms[a] << ":" << val1 << ":" << val2 << ":" << val3 << endl;
+            v.push_back({minterms[a],val1,val2,val3});
+            //cout << minterms[a] << ":" << val1 << ":" << val2 << ":" << val3 << endl;
             //
             //
             chk[minterms[a]] = true;
@@ -415,7 +423,8 @@ void essential(int minterms[], int size, int lit)
         {
             //
             //
-            cout << minterms[a] << ":" << val1 << ":" << val2 << ":" << val3 << ":" << val4 << ":" << val5 << ":" << val6 << ":" << val7 << endl;
+            v.push_back({minterms[a],val1,val2,val3,val4,val5,val6,val7});
+            //cout << minterms[a] << ":" << val1 << ":" << val2 << ":" << val3 << ":" << val4 << ":" << val5 << ":" << val6 << ":" << val7 << endl;
             //
             //
             chk[minterms[a]] = true;
@@ -453,7 +462,7 @@ void essential(int minterms[], int size, int lit)
     //     if(!chk[minterms[q]]) cout << minterms[q] << endl;
     // }
     // cout << endl;
-    cout << "-----------------------------------------------------------------------------"<< endl;
+    //cout << "-----------------------------------------------------------------------------"<< endl;
 
     // Control Variables
     int b; 
@@ -526,8 +535,9 @@ void essential(int minterms[], int size, int lit)
         {
             //
             //
-            cout << buffer8[0] << ":" << buffer8[1] << ":" << buffer8[2] << ":" << buffer8[3] << ":";
-            cout << buffer8[4] << ":" << buffer8[5] << ":" << buffer8[6] << ":" << buffer8[7] << endl;
+            v.push_back({buffer8[0],buffer8[1],buffer8[2],buffer8[3],buffer8[4],buffer8[5],buffer8[6],buffer8[7]});
+            //cout << buffer8[0] << ":" << buffer8[1] << ":" << buffer8[2] << ":" << buffer8[3] << ":";
+            //cout << buffer8[4] << ":" << buffer8[5] << ":" << buffer8[6] << ":" << buffer8[7] << endl;
             //
             //
         }
@@ -588,7 +598,10 @@ void essential(int minterms[], int size, int lit)
         }
         //
         //
-        if(buffer4[0] != -1) cout << buffer4[0] << ":" << buffer4[1] << ":" << buffer4[2] << ":" << buffer4[3] <<endl;
+        if(buffer4[0] != -1){
+        v.push_back({buffer4[0],buffer4[1],buffer4[2],buffer4[3]});
+        //cout << buffer4[0] << ":" << buffer4[1] << ":" << buffer4[2] << ":" << buffer4[3] <<endl;
+        }
         //
         //
         free(tempList);
@@ -629,7 +642,10 @@ void essential(int minterms[], int size, int lit)
         }
         //
         //
-        if(buffer2[0] != -1) cout << buffer2[0] << ":" << buffer2[1] << endl;
+        if(buffer2[0] != -1){
+        v.push_back({buffer2[0],buffer2[1]});
+        //cout << buffer2[0] << ":" << buffer2[1] << endl;
+        }
         //
         //
         free(tempList);
@@ -643,8 +659,16 @@ void essential(int minterms[], int size, int lit)
 
 int main()
 {
-    int sample[] = {0, 2};
-    essential(sample, 2, 2);
-
+    int order,n; cin>>order>>n;
+    int sample[n];
+    for(int i=0; i<n; i++){cin>>sample[i];}	
+    essential(sample, n, order);
+    cout<<endl;
+    for(int i=0; i<v.size(); i++){
+    	for(int j=0; j<v[i].size(); j++){
+    		cout<<v[i][j]<<" ";
+    	}cout<<endl;
+    }
+    
     return(0);
 }

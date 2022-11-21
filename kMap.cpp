@@ -136,9 +136,27 @@ void printK4(bool map[16])
     cout << "|_______|_______|_______|_______|" << endl;
 }
 
+void printK3(bool map[8])
+{
+    cout << " _______ _______ _______ _______ " << endl;
+    cout << "|" << map[0] << "\t|" << map[2] << "\t|" << map[6] << "\t|" << map[4] << "\t|" << endl;
+    cout << "|_______|_______|_______|_______|" << endl;
+    cout << "|" << map[1] << "\t|" << map[3] << "\t|" << map[7] << "\t|" << map[5] << "\t|" << endl;
+    cout << "|_______|_______|_______|_______|" << endl;
+}
+
+void printK2(bool map[4])
+{
+    cout << " _______ _______ " << endl;
+    cout << "|" << map[0] << "\t|" << map[2] << "\t|" << endl;
+    cout << "|_______|_______| " << endl;
+    cout << "|" << map[1] << "\t|" << map[3] << "\t|" << endl;
+    cout << "|_______|_______| " << endl;
+}
+
 // The following function prints out terms that are combined in a 4 variable Karnaugh map
 // Inputs :: Array of minterms (in decimal), size of array 
-void essential(int minterms[], int size)
+void essential(int minterms[], int size, int lit)
 {
     // Special Case
     if(size == 16)
@@ -164,7 +182,14 @@ void essential(int minterms[], int size)
     }
 
     // Print
-    printK4(map);
+    if(lit == 4) printK4(map);
+    else if(lit == 3) printK3(map);
+    else if(lit == 2) printK2(map);
+    else
+    {
+        cout << "INVALID" << endl;
+        return;
+    }
 
     // Singleton Elements
     int a, x;
@@ -184,7 +209,11 @@ void essential(int minterms[], int size)
         // Encircle if no match
         if(!foundMatch)
         {
+            //
+            //
             cout << minterms[a] << endl;
+            //
+            //
             chk[minterms[a]] = true;
             circled++;
         }
@@ -224,9 +253,13 @@ void essential(int minterms[], int size)
         // Encircle only if single match
         if(foundMatch && !foundAgain)
         {
+            //
+            //
             cout << minterms[a] << ":" << val << endl;
-            chkRecent[minterms[a]] = true;
-            chkRecent[val] = true;
+            //
+            //
+            chk[minterms[a]] = true;
+            chk[val] = true;
             circled += 2;
         }
 
@@ -237,18 +270,24 @@ void essential(int minterms[], int size)
     }
 
     // Modify chk
-    for(int w = 0; w < 16; w++)
-    {
-        chk[w] = chk[w] || chkRecent[w];
-        chkRecent[w] = false;
-    }
+    // for(int w = 0; w < 16; w++)
+    // {
+    //     chk[w] = chk[w] || chkRecent[w];
+    //     chkRecent[w] = false;
+    // }
     
-
-    // Groups of 4
+    
+    // Groups of 4 + 8 variables
     int y;
     int val1, val2, val3;
     int temp1, temp2, temp3;
     bool mapVal, chkVal;
+    int z;
+    int val4, val5, val6, val7;
+    int temp4, temp5, temp6, temp7;
+
+    if(lit != 2)
+    {
     for(a = 0; a < size; a++)
     {   
         // Ignore if already encircled
@@ -292,11 +331,15 @@ void essential(int minterms[], int size)
         // Encircle only if single match
         if(foundMatch && !foundAgain)
         {
+            //
+            //
             cout << minterms[a] << ":" << val1 << ":" << val2 << ":" << val3 << endl;
-            chkRecent[minterms[a]] = true;
-            chkRecent[val1] = true;
-            chkRecent[val2] = true;
-            chkRecent[val3] = true;
+            //
+            //
+            chk[minterms[a]] = true;
+            chk[val1] = true;
+            chk[val2] = true;
+            chk[val3] = true;
             circled += 4;
         }
 
@@ -307,16 +350,15 @@ void essential(int minterms[], int size)
     }
 
     // Modify chk
-    for(int w = 0; w < 16; w++)
-    {
-        chk[w] = chk[w] || chkRecent[w];
-        chkRecent[w] = false;
-    }
+    // for(int w = 0; w < 16; w++)
+    // {
+    //     chk[w] = chk[w] || chkRecent[w];
+    //     chkRecent[w] = false;
+    // }
 
+    if(lit != 3)
+    {
     // Groups of 8
-    int z;
-    int val4, val5, val6, val7;
-    int temp4, temp5, temp6, temp7;
     for(a = 0; a < size; a++)
     {   
         // Ignore if already encircled
@@ -371,15 +413,19 @@ void essential(int minterms[], int size)
         // Encircle only if single match
         if(foundMatch && !foundAgain)
         {
+            //
+            //
             cout << minterms[a] << ":" << val1 << ":" << val2 << ":" << val3 << ":" << val4 << ":" << val5 << ":" << val6 << ":" << val7 << endl;
-            chkRecent[minterms[a]] = true;
-            chkRecent[val1] = true;
-            chkRecent[val2] = true;
-            chkRecent[val3] = true;
-            chkRecent[val4] = true;
-            chkRecent[val5] = true;
-            chkRecent[val6] = true;
-            chkRecent[val7] = true;
+            //
+            //
+            chk[minterms[a]] = true;
+            chk[val1] = true;
+            chk[val2] = true;
+            chk[val3] = true;
+            chk[val4] = true;
+            chk[val5] = true;
+            chk[val6] = true;
+            chk[val7] = true;
             circled += 8;
         }
 
@@ -388,13 +434,15 @@ void essential(int minterms[], int size)
         foundAgain = false;
         free(tempList);
     }
+    }
+    }
 
     // Modify chk
-    for(int w = 0; w < 16; w++)
-    {
-        chk[w] = chk[w] || chkRecent[w];
-        chkRecent[w] = false;
-    }
+    // for(int w = 0; w < 16; w++)
+    // {
+    //     chk[w] = chk[w] || chkRecent[w];
+    //     chkRecent[w] = false;
+    // }
 
     // _________________________________________________________________________________________________
 
@@ -412,9 +460,11 @@ void essential(int minterms[], int size)
     int unCircled, tempCircled;
 
     // Check for groups of eight
+    if(lit >= 4)
+    {
     unCircled = 0;
     tempCircled = 1;
-    int buffer8[8] = {-1};
+    int buffer8[8] = {-1, -1, -1, -1, -1, -1, -1, -1};
     for(b = 0; b < size; b++)
     {
         int *tempList = nearestNeigh(minterms[b], 4);
@@ -474,19 +524,26 @@ void essential(int minterms[], int size)
         }
         if(buffer8[0] != -1) 
         {
+            //
+            //
             cout << buffer8[0] << ":" << buffer8[1] << ":" << buffer8[2] << ":" << buffer8[3] << ":";
             cout << buffer8[4] << ":" << buffer8[5] << ":" << buffer8[6] << ":" << buffer8[7] << endl;
+            //
+            //
         }
         free(tempList);
 
         // Reset buffer val
         buffer8[0] = -1;
     }
+    }
 
     // Check for groups of 4
+    if(lit >= 3)
+    {
     unCircled = 0;
     tempCircled = 1;
-    int buffer4[4] = {-1};
+    int buffer4[4] = {-1, -1, -1, -1};
     for(b = 0; b < size; b++)
     {
         if(chk[minterms[b]]) continue;
@@ -529,16 +586,23 @@ void essential(int minterms[], int size)
                 }
             }
         }
+        //
+        //
         if(buffer4[0] != -1) cout << buffer4[0] << ":" << buffer4[1] << ":" << buffer4[2] << ":" << buffer4[3] <<endl;
+        //
+        //
         free(tempList);
 
         // Reset buffer val
         buffer4[0] = -1;
     }
+    }
 
     // Check for groups of 2
+    if(lit >= 2)
+    {
     unCircled = 0;
-    int buffer2[2] = {-1};
+    int buffer2[2] = {-1, -1};
     for(b = 0; b < size; b++)
     {
         if(chk[minterms[b]]) continue;
@@ -563,19 +627,24 @@ void essential(int minterms[], int size)
                 }
             }
         }
+        //
+        //
         if(buffer2[0] != -1) cout << buffer2[0] << ":" << buffer2[1] << endl;
+        //
+        //
         free(tempList);
 
         // Reset buffer value
         buffer2[0] = -1;
+    }
     }
     return;
 }
 
 int main()
 {
-    int sample[] = {0, 1, 3, 5, 7, 9, 13, 15};
-    essential(sample, 8);
+    int sample[] = {0, 2};
+    essential(sample, 2, 2);
 
     return(0);
 }
